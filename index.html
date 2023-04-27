@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+	<head>
+		<style>
+			h1, h2, h3, p {
+				font-family: arial;
+				color: #000000;
+				font-size: 32px;
+				margin-bottom: 0.2em;
+			}
+			h2 {
+				font-size: 24px;
+				margin-top: 0em;
+			}
+			h3 {
+				font-size: 16px;
+				margin: 8px 8px 24px 8px;
+			}
+			p {
+				font-size: 14px;
+				margin: 8px 8px;
+			}
+			article.module1 {
+				width: 334px;
+				height: 580px;
+				border: 2px dashed #3E8E41;
+				background-color: #F4F4F4;
+				margin: 0px 16px 0px 0px;
+				padding: 8px;
+			}
+			article.module2 {
+				width: 890px;
+				height: 580px;
+				border: 2px dashed #CF5F5F;
+				background-color: #F4F4F4;
+				margin: 0px 16px 0px 0px;
+				padding: 8px;
+			}
+			img.music_icon, img.popup_icon {
+				width: 80px;
+				height: 80px;
+				border-radius: 12px;
+				border: 2px solid #AAAAAA;
+				box-shadow: 3px 3px 3px #444444;
+				margin: 8px 8px 0px 8px;
+				opacity: 1;
+				transition: .5s ease;
+				backface-visibility: hidden;
+			}
+			img.music_icon:hover {
+				opacity: 0.5;
+				cursor: pointer;
+			}
+			div.music_label {
+				display: block;
+				font-family: arial;
+				font-size: 12px;
+				vertical-align: middle;
+				width: 170px;
+				height: 80px;
+				border: 2px solid #F4F4F4;
+				box-shadow: 3px 3px 3px #F4F4F4;
+				margin: 8px 8px 12px 8px;
+				cursor: pointer;
+			}
+			div.popup_label {
+				display: block;
+				font-family: arial;
+				font-size: 12px;
+				vertical-align: middle;
+				width: 320px;
+				height: 80px;
+				margin: 40px 8px 12px 8px;
+			}
+			p.music_label {
+				font-size: 14px;
+				margin: 24px 8px 8px 8px;
+			}
+			div.button_container {
+				height: 96px;
+			}
+			.popup{
+				background-color: #FFFFFF;
+				opacity: 0.97;
+				width: 1249px;
+				height: 570px;
+				padding: 10px 10px;
+				position: absolute;
+				left: 52px;
+				top: 118px;
+				border-radius: 8px;
+				border: 1px solid #000000;
+				display: none;
+				text-align: left;
+			}
+			button.choose, button.pass, button.close {
+				width: 24px;
+				height: 24px;
+				font-family: arial;
+				font-size: 12px;
+				border-radius: 4px;
+				cursor: pointer;
+			}
+			button.choose {
+				background-color: #4CAF50;
+				margin-top: 24px;
+			}
+			button.pass {
+				background-color: #F46558;
+				margin-top: 12px;
+			}
+			button.close {
+				display: block;
+				margin:  0 0 10px auto;
+				font-size: 24px;
+				color: #FFFFFF;
+				background: #03549A;
+				border-radius: 100%;
+				width: 30px;
+				height: 30px;
+				position: absolute;
+				left: 1229px;
+				top: 10px;
+				border: none;
+				outline: none;
+				cursor: pointer;
+			}
+			button.choose:active {
+				background-color: #3E8E41;
+				transform: translateY(1px);
+			}
+			button.pass:active {
+				background-color: #CF5F5F;
+				transform: translateY(1px);
+			}
+			button.choose:disabled, button.pass:disabled {
+				border: 1px solid #999999;
+				background-color: #cccccc;
+				color: #666666;
+				cursor: not-allowed;
+			}
+			#pop_slider {
+				-webkit-appearance: none;
+				width: 360px;
+				height: 8px;
+				border-radius: 5px;  
+				background: #888888;
+				outline: none;
+				opacity: 1;
+				margin-left: 8px;
+			}
+			#pop_slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 12px;
+				height: 12px;
+				border-radius: 6px;
+				background: #03549A;
+			}
+			#radar_container {
+				width: 420px;
+				height: 400px;
+			}
+		</style>
+	<title>Project: Understanding Recommondation Algorithm through Visualization</title>
+	</head>
+
+	<!-- Load d3.js -->
+	<script src="https://d3js.org/d3.v4.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-radar.min.js"></script>
+	
+	<body style="text-align:center; padding: 0px 40px" id="body">
+		<div align="left" style="width:1280px;">
+			<h1>Project: Understanding Recommondation Algorithm through Visualization</h1>
+			<h2>Li Kainan (1002247)</h2>
+			
+			<br>
+			
+			<article class="module1" style="float:left">
+				<h3 style="float:left; color:#3E8E41; width: 240px;">Front-End</h3>
+				<button type="button" style="float:right; margin-top: 6px; margin-right: 14px; font-size: 16px;" onclick="initialize()"><b>Reset</b></button>
+				
+				<p style="float:left;"><b>Recommonded</b></p>
+				<button type="button" style="float:right; margin-top: 6px; margin-right: 14px;" onclick="recommend()">refresh</button>
+				
+				<article style="float:left;">
+					<article style="float:left; width: 96px;">
+						<img id="rec1_img" class="music_icon" onclick="popup('rec', 1)"></img>
+						<img id="rec2_img" class="music_icon" onclick="popup('rec', 2)"></img>
+						<img id="rec3_img" class="music_icon" onclick="popup('rec', 3)"></img>
+						<img id="rec4_img" class="music_icon" onclick="popup('rec', 4)"></img>
+						<img id="rec5_img" class="music_icon" onclick="popup('rec', 5)"></img>
+					</article>
+					<article style="float:left; width:200px;">
+						<div class="music_label" onclick="popup('rec', 1)"><p id="rec1" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('rec', 2)"><p id="rec2" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('rec', 3)"><p id="rec3" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('rec', 4)"><p id="rec4" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('rec', 5)"><p id="rec5" class="music_label"></p></div>
+					</article>
+					<article style="float:left; width: 24px;">
+						<div class="button_container">
+							<button id="choose1" title="Listen" type="button" class="choose" onclick="choose(0)"><b>O</b></button>
+							<button id="pass1" title="Not interested" type="button" class="pass" onclick="pass(0)"><b>X</b></button>
+						</div>
+						<div class="button_container">
+							<button id="choose2" title="Listen" type="button" class="choose" onclick="choose(1)"><b>O</b></button>
+							<button id="pass2" title="Not interested" type="button" class="pass" onclick="pass(1)"><b>X</b></button>
+						</div>
+						<div class="button_container">
+							<button id="choose3" title="Listen" type="button" class="choose" onclick="choose(2)"><b>O</b></button>
+							<button id="pass3" title="Not interested" type="button" class="pass" onclick="pass(2)"><b>X</b></button>
+						</div>
+						<div class="button_container">
+							<button id="choose4" title="Listen" type="button" class="choose" onclick="choose(3)"><b>O</b></button>
+							<button id="pass4" title="Not interested" type="button" class="pass" onclick="pass(3)"><b>X</b></button>
+						</div>
+						<div class="button_container">
+							<button id="choose5" title="Listen" type="button" class="choose" onclick="choose(4)"><b>O</b></button>
+							<button id="pass5" title="Not interested" type="button" class="pass" onclick="pass(4)"><b>X</b></button>
+						</div>
+					</article>
+				</article>
+			
+			</article>
+			
+			<article class="module2" style="float:left;margin:0px;">
+				<h3 style="color:#CF5F5F">Back-End</h3>
+				<p style="float:left; width:282px;"><b>Preference</b></p>
+				<p style="float:left; width:282px;"><b>Dislike</b></p>
+				<p style="float:left;"><b>Not Recommonded</b></p>
+				
+				<article style="float:left; width:298px;">
+					<article id="pre_article" style="float:left; width: 96px;">
+						<img id="pre1_img" class="music_icon" onclick="popup('pre', 1)"></img>
+						<img id="pre2_img" class="music_icon" onclick="popup('pre', 2)"></img>
+						<img id="pre3_img" class="music_icon" onclick="popup('pre', 3)"></img>
+						<img id="pre4_img" class="music_icon" onclick="popup('pre', 4)"></img>
+						<img id="pre5_img" class="music_icon" onclick="popup('pre', 5)"></img>
+					</article>
+					<article style="float:left;">
+						<div class="music_label" onclick="popup('pre', 1)"><p id="pre1" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('pre', 2)"><p id="pre2" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('pre', 3)"><p id="pre3" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('pre', 4)"><p id="pre4" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('pre', 5)"><p id="pre5" class="music_label"></p></div>
+					</article>
+				</article>
+				
+				<article style="float:left; width:298px;">
+					<article id="ni_article" style="float:left; width: 96px;">
+						<img id="ni1_img" class="music_icon" onclick="popup('ni', 1)"></img>
+						<img id="ni2_img" class="music_icon" onclick="popup('ni', 2)"></img>
+						<img id="ni3_img" class="music_icon" onclick="popup('ni', 3)"></img>
+						<img id="ni4_img" class="music_icon" onclick="popup('ni', 4)"></img>
+						<img id="ni5_img" class="music_icon" onclick="popup('ni', 5)"></img>
+					</article>
+					<article style="float:left;">
+						<div class="music_label" onclick="popup('ni', 1)"><p id="ni1" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('ni', 2)"><p id="ni2" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('ni', 3)"><p id="ni3" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('ni', 4)"><p id="ni4" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('ni', 5)"><p id="ni5" class="music_label"></p></div>
+					</article>
+				</article>
+				
+				<article style="float:left; width:290px;">
+					<article style="float:left; width: 96px;">
+						<img id="nr1_img" class="music_icon" onclick="popup('nr', 1)"></img>
+						<img id="nr2_img" class="music_icon" onclick="popup('nr', 2)"></img>
+						<img id="nr3_img" class="music_icon" onclick="popup('nr', 3)"></img>
+						<img id="nr4_img" class="music_icon" onclick="popup('nr', 4)"></img>
+						<img id="nr5_img" class="music_icon" onclick="popup('nr', 5)"></img>
+					</article>
+					<article style="float:left;">
+						<div class="music_label" onclick="popup('nr', 1)"><p id="nr1" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('nr', 2)"><p id="nr2" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('nr', 3)"><p id="nr3" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('nr', 4)"><p id="nr4" class="music_label"></p></div>
+						<div class="music_label" onclick="popup('nr', 5)"><p id="nr5" class="music_label"></p></div>
+					</article>
+				</article>
+			</article>
+		</div>
+		
+		<div class="popup">
+			<button id="close" class="close"><b>&times;</b></button>
+			<h3>Recommended #1</h3>
+			<article style="float:left; height: 120px; width: 96px;">
+				<img id="popup_img" class="popup_icon" style="cursor: default;"></img>
+			</article>
+			<article style="float:left; height: 120px; width: 320px;">
+				<div class="popup_label">
+					<p id="popup_label" class="music_label"></p>
+				</div>
+			</article>
+			<article style="float:left; height: 120px; width: 600px;">
+				<h3 id="pop_title" style="margin-top:16px;">Popularity:&emsp;8.6</h3>
+				<input type="range" id="pop_slider" style="float:left" min="1" max="100" value="90" disabled=true></input>
+			</article>
+			<br>
+			<div id="radar_container" style="float:left;"></div>
+		</div>
+		<script type="text/javascript" src="lib.js"></script>
+	</body>
+</html>
